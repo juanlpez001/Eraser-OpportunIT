@@ -15,6 +15,7 @@ namespace OpportunIT_Platform.Context
         }
 
         public DbSet<Login> Login { get; set; }
+
     }
 
 }

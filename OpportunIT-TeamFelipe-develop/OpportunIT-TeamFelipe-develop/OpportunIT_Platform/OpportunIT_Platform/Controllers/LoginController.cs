@@ -14,7 +14,7 @@ namespace OpportunIT_Platform.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        private readonly AppDbContext context;
+        private  AppDbContext context;
 
         public LoginController(AppDbContext context)
         {
@@ -23,16 +23,28 @@ namespace OpportunIT_Platform.Controllers
         }
         // GET: api/<LoginController>
         [HttpGet]
-        public IEnumerable<Login> Get()
+        public Login Get()
         {
-            return context.Login.ToList();
+            
+
+
+            using(var database = context)
+            {
+
+                var query = (from login in database.Login
+                             select login);
+
+                return query.FirstOrDefault();
+
+            }
+           
         }
 
         // GET api/<LoginController>/5
         [HttpGet("{id}")]
-        public Login Get(string us)
+        public Login Get(int id)
         {
-            var login = context.Login.FirstOrDefault(l=>l.UsPassword == us);
+            var login = context.Login.FirstOrDefault(l=>l.IdLogin == id);
             return login;
         }
 
